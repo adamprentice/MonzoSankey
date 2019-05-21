@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoSankey.Services", "MonzoSankey.Services\MonzoSankey.Services.csproj", "{B7F05D15-FCF9-49A6-A4A0-2D293619E806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoSankey.Web", "MonzoSankey.Web\MonzoSankey.Web.csproj", "{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1B08FC0-611B-44A5-AC22-C7890B84EDE6}
+	EndGlobalSection
+EndGlobal
