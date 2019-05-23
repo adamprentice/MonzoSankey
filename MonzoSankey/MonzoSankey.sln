@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonzoApi.Core", "MonzoSanke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonzoSankey.Services", "MonzoSankey.Services\MonzoSankey.Services.csproj", "{04D7FC8C-E122-466B-B161-A6626B74979C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoApi", "MonzoApi\MonzoApi.csproj", "{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoApi.Services", "MonzoApi\MonzoApi.Services.csproj", "{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoSankey.Tests", "MonzoSankey.Tests\MonzoSankey.Tests.csproj", "{CF736C59-B0DA-450D-BA83-38B5E4FD8366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoApi.Tests", "MonzoApi.Tests\MonzoApi.Tests.csproj", "{234CA4A0-6C9A-4876-AE3D-BB1405D482A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF736C59-B0DA-450D-BA83-38B5E4FD8366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF736C59-B0DA-450D-BA83-38B5E4FD8366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF736C59-B0DA-450D-BA83-38B5E4FD8366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF736C59-B0DA-450D-BA83-38B5E4FD8366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{234CA4A0-6C9A-4876-AE3D-BB1405D482A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{234CA4A0-6C9A-4876-AE3D-BB1405D482A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{234CA4A0-6C9A-4876-AE3D-BB1405D482A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{234CA4A0-6C9A-4876-AE3D-BB1405D482A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
