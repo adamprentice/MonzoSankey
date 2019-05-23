@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
+import {Sankey} from 'react-vis';
+
 
 export class Home extends Component {
     displayName = Home.name
 
     constructor( props ) {
         super( props );
-        this.state = { transactionCount: 0, loading: true };
+        this.state = { nodes: [], links: [], loading: true };
 
         fetch( 'api/Transaction/Transactions' )
             .then( response => response.json() )
             .then( data => {
-                this.setState( { transactionCount: data, loading: false } );
+                this.setState( { nodes: data.nodes, links: data.links, loading: false } );
             } );
     }
-
 
     render() {
         let contents = this.state.loading
             ? <p><em>Loading...</em></p>
-            : <p>The amount of transactions is {this.state.transactionCount}</p>;
+            : <Sankey nodes={this.state.nodes} links={this.state.links} width={1000} height={800}/>;
 
     return (
       <div>
