@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MonzoApi\MonzoApi.csproj" />
+    <ProjectReference Include="..\MonzoApi\MonzoApi.Services.csproj" />
     <ProjectReference Include="..\MonzoSankey.Core\MonzoApi.Core.csproj" />
   </ItemGroup>
 
