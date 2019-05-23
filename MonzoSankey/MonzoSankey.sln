@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoSankey.Services", "MonzoSankey.Services\MonzoSankey.Services.csproj", "{B7F05D15-FCF9-49A6-A4A0-2D293619E806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonzoSankey.Web", "MonzoSankey.Web\MonzoSankey.Web.csproj", "{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoSankey.Web", "MonzoSankey.Web\MonzoSankey.Web.csproj", "{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonzoApi.Core", "MonzoSankey.Core\MonzoApi.Core.csproj", "{6F96583E-8D70-47B4-9A0A-3A9DB030BA57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonzoSankey.Services", "MonzoSankey.Services\MonzoSankey.Services.csproj", "{04D7FC8C-E122-466B-B161-A6626B74979C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonzoApi", "MonzoApi\MonzoApi.csproj", "{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7F05D15-FCF9-49A6-A4A0-2D293619E806}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC1FFA99-B10C-4FC1-BA08-B6AD7D1FF33D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F96583E-8D70-47B4-9A0A-3A9DB030BA57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F96583E-8D70-47B4-9A0A-3A9DB030BA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F96583E-8D70-47B4-9A0A-3A9DB030BA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F96583E-8D70-47B4-9A0A-3A9DB030BA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04D7FC8C-E122-466B-B161-A6626B74979C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04D7FC8C-E122-466B-B161-A6626B74979C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04D7FC8C-E122-466B-B161-A6626B74979C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04D7FC8C-E122-466B-B161-A6626B74979C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9751885-C6BA-439E-9A5B-4C6EDE53F0B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
