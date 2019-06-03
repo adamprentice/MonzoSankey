@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using MonzoApi.Services;
 using MonzoSankey.Services.Models;
 using MonzoSankey.Services.Transactions;
 
@@ -15,20 +17,25 @@ namespace MonzoSankey.Web.Controllers.Api
     public class TransactionController : ControllerBase
     {
         private ITransactionService transactionService;
+        private MonzoSettings settings;
 
-        public TransactionController(ITransactionService transactionService)
+        public TransactionController(ITransactionService transactionService, IOptions<MonzoSettings> settings)
         {
             this.transactionService = transactionService;
+            this.settings = settings.Value;
         }
 
         [HttpGet("[action]")]
-        public SankeyResponse Transactions()
-        {
-            var client = new MonzoApi.MonzoClient(); // Needs to be one per user due to authentication, will need to be attached to user object or cached once logged in.
+        public async Task<SankeyResponse> Transactions()
+        {            
+            var accessToken = settings.AccessToken;  // Needs to be one per user due to authentication, will need to be attached to user object or cached once logged in.
 
-            var sankeyResponse = this.transactionService.GetSankeyDataForTransactions(client, DateTime.UtcNow.AddMonths(-1), DateTime.UtcNow);
+            using (var client = new MonzoClient(accessToken))
+            {
+                var transactions = await client.GetTransactions(new string[]{ settings.AccountId }, DateTime.Now.AddMonths(-1), DateTime.Now);
 
-            return sankeyResponse;
+                return this.transactionService.GetSankeyDataForTransactions(transactions);
+            }
         }
     }
 }

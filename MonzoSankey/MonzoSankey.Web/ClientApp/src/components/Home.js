@@ -7,7 +7,7 @@ export class Home extends Component {
 
     constructor( props ) {
         super( props );
-        this.state = { nodes: [], links: [], loading: true };
+        this.state = { nodes: [], links: [], userId: null, loading: true };
 
         fetch( 'api/Transaction/Transactions' )
             .then( response => response.json() )
@@ -22,9 +22,7 @@ export class Home extends Component {
             : <Sankey nodes={this.state.nodes} links={this.state.links} width={1000} height={800}/>;
 
     return (
-      <div>
-        <h1>Hello, world!</h1>
-        <p>Welcome to your new single-page application, built with:</p>
+      <div>       
         {contents}
       </div>
     );

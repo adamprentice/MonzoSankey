@@ -1,26 +1,77 @@
-﻿using MonzoSankey.Core.Models;
+﻿using MonzoApi.Services.Helpers;
+using MonzoApi.Services.Models;
+using MonzoApi.Services.Responses;
+using MonzoSankey.Core.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace MonzoApi
+namespace MonzoApi.Services
 {
-    public class MonzoClient
+    public class MonzoClient : IMonzoClient
     {
-        private List<Transaction> transactions;
+        private readonly HttpClient _httpClient;
 
         public MonzoClient()
         {
-            this.transactions = JsonConvert.DeserializeObject<List<Transaction>>(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),"Data/transactions.json")));
         }
 
-        public IEnumerable<Transaction> GetTransactions(DateTime? from = null, DateTime? to = null)
+        public MonzoClient(string accessToken, string apiUri = "https://api.monzo.com")
         {
-            return this.transactions.Where(x => (from == null || x.Settled > from) && (to == null || x.Settled < to));
+            this._httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(apiUri),
+                DefaultRequestHeaders =
+                {
+                    Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken)
+                }
+            };
+        }
+
+        public void Dispose()
+        {
+            _httpClient.Dispose();
+        }
+
+        public async Task<List<Transaction>> GetTransactions(string[] accountIds, DateTime? from = null, DateTime? to = null)
+        {
+            if (accountIds.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(accountIds));
+            }
+
+            var queryValues = new Dictionary<string, string>
+            {
+                { "account_id", accountIds.FirstOrDefault()},
+                { "expand[]", "merchant" }
+            };
+
+            var pagination = new Pagination
+            {
+                From = from,
+                To = to
+            };
+
+            var url = UrlHelper.BuildApiUrl("transactions", queryValues, pagination);
+
+            var response = await this.GetResponse<ListTransactionsResponse>(url);
+
+            return response.Transactions;
+        }
+
+        private async Task<T> GetResponse<T>(string url)
+        {
+            var response = await _httpClient.GetAsync(url);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            // Insert Error catching
+            return JsonConvert.DeserializeObject<T>(responseBody);
         }
     }
 }
