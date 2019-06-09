@@ -2,48 +2,64 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MonzoApi.Services;
 using MonzoApi.Services.Helpers;
+using Jose;
 
 namespace MonzoSankey.Web.Controllers
 {
     public class AuthController : Controller
     {
         private readonly IMonzoAuthorizationClient authClient;
-        private MonzoSettings settings;
+        private readonly MonzoSettings settings;
 
         public AuthController(IOptions<MonzoSettings> settings)
         {
             this.settings = settings.Value;
 
-            this.authClient = new MonzoAuthorizationClient(this.settings.ClientId, this.settings.ClientSecret, this.settings.ApiBaseUrl);
+            this.authClient = new MonzoAuthorizationClient(this.settings.ClientId, this.settings.ClientSecret, this.settings.BaseUrl, this.settings.ApiSubDomain);
         }
 
         public IActionResult Login()
         {
-            var state = StringHelpers.RandomString(50);
-
             var redirectUrl = Url.Action("OAuthCallback", "Auth", null, Request.Scheme);
 
-            var loginPageUrl = authClient.GetAuthUrl(state, redirectUrl);
+            var loginPageUrl = authClient.GetAuthUrl(this.settings.State, redirectUrl);
 
             return Redirect(loginPageUrl);
         }
 
         public async Task<ActionResult> OAuthCallback(string code, string state)
         {
+            if (this.settings.State != state)
+            {
+                var view = View("Error");
+                view.StatusCode = (int)HttpStatusCode.Forbidden;
+
+                return view;
+            }
+
             var redirectUrl = Url.Action("OAuthCallback", "Auth", null, Request.Scheme);
 
             var accessToken = await this.authClient.GetAccessTokenAsync(code, redirectUrl);
 
-            return null; // Need to save the access token somewhere, possibly against the user id and send back the user id to the client?
+            var payload = new Dictionary<string, object>
+            {
+                { "access_token", accessToken},
+            };
+
+            var token = JWT.Encode(payload, this.settings.EncryptKey, JwsAlgorithm.HS256);
+
+            Response.Cookies.Append("jwt", token);
+
+            return new RedirectResult("/chart");
         }
     }
-
-    
 }
