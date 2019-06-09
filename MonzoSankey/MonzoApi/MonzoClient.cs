@@ -14,24 +14,12 @@ using System.Threading.Tasks;
 
 namespace MonzoApi.Services
 {
-    public class MonzoClient : IMonzoClient
+    public class MonzoClient : Client, IMonzoClient
     {
-        private readonly HttpClient _httpClient;
-
-        public MonzoClient()
+        public MonzoClient(string accessToken, string baseDomain = "https://monzo.com", string apiSubDomain = "api")
+            : base(baseDomain, apiSubDomain)
         {
-        }
-
-        public MonzoClient(string accessToken, string apiUri = "https://api.monzo.com")
-        {
-            this._httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(apiUri),
-                DefaultRequestHeaders =
-                {
-                    Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken)
-                }
-            };
+            this._httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
         }
 
         public void Dispose()

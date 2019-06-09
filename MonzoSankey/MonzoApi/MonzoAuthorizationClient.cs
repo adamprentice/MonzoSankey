@@ -11,25 +11,17 @@ using System.Threading.Tasks;
 
 namespace MonzoApi.Services
 {
-    public class MonzoAuthorizationClient : IMonzoAuthorizationClient
+    public class MonzoAuthorizationClient : Client, IMonzoAuthorizationClient
     {
-        private readonly HttpClient _httpClient;
-
         private string ClientId { get; }
 
         private string ClientSecret { get; }
 
-        private string BaseDomain { get; }
-
-        public MonzoAuthorizationClient(string clientId, string clientSecret, string apiUri = "https://api.monzo.com")
+        public MonzoAuthorizationClient(string clientId, string clientSecret, string baseDomain = "https://monzo.com", string apiSubDomain = "api")
+            : base(baseDomain, apiSubDomain)
         {
             this.ClientId = clientId;
             this.ClientSecret = clientSecret;
-
-            var uri = new Uri(apiUri);
-            this.BaseDomain = uri.AbsoluteUri; // Need to strip out anything but the domain - so get rid of the protocol, sub domains etc
-
-            this._httpClient = new HttpClient { BaseAddress = new Uri(apiUri) };
         }
 
         public string GetAuthUrl(string state, string redirectUri)
@@ -74,6 +66,5 @@ namespace MonzoApi.Services
 
             return JsonConvert.DeserializeObject<AccessToken>(body);
         }
-
     }
 }

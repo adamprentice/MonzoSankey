@@ -20,9 +20,11 @@ namespace MonzoSankey.Services.Transactions
             var merchants = outgoings.Where(x => x.Merchant != null).Select(x => x.Merchant.Name).Distinct();
             var unknown = outgoings.Where(x => x.Merchant == null);
 
-            var nodes = new List<SankeyNode>();
-            nodes.Add(new SankeyNode("Income"));
-            nodes.Add(new SankeyNode("Transfer"));
+            var nodes = new List<SankeyNode>
+            {
+                new SankeyNode("Income"),
+                new SankeyNode("Transfer")
+            };
 
             nodes.AddRange(categories.Select(x => new SankeyNode(x)));
             nodes.AddRange(merchants.Select(x => new SankeyNode(x)));

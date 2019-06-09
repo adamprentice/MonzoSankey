@@ -16,8 +16,8 @@ namespace MonzoSankey.Web.Controllers.Api
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private ITransactionService transactionService;
-        private MonzoSettings settings;
+        private readonly ITransactionService transactionService;
+        private readonly MonzoSettings settings;
 
         public TransactionController(ITransactionService transactionService, IOptions<MonzoSettings> settings)
         {
@@ -30,7 +30,7 @@ namespace MonzoSankey.Web.Controllers.Api
         {            
             var accessToken = settings.AccessToken;  // Needs to be one per user due to authentication, will need to be attached to user object or cached once logged in.
 
-            using (var client = new MonzoClient(accessToken))
+            using (var client = new MonzoClient(accessToken, this.settings.BaseUrl, this.settings.ApiSubDomain))
             {
                 var transactions = await client.GetTransactions(new string[]{ settings.AccountId }, DateTime.Now.AddMonths(-1), DateTime.Now);
 
