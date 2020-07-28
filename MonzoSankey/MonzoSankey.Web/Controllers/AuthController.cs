@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using MonzoApi.Services;
 using MonzoApi.Services.Helpers;
 using Jose;
+using MonzoApi.Services.Models;
 
 namespace MonzoSankey.Web.Controllers
 {
@@ -29,6 +30,23 @@ namespace MonzoSankey.Web.Controllers
 
         public IActionResult Login()
         {
+            if (this.Request.Cookies.ContainsKey("jwt"))
+            {
+                try
+                {
+                    var jwt = JWT.Decode<AccessToken>(this.Request.Cookies["jwt"], this.settings.EncryptKey, JwsAlgorithm.HS256);
+
+                    if (DateTime.UtcNow < jwt.Expires)
+                    {
+                        return new RedirectResult("/chart");
+                    }
+                }
+                catch
+                {
+                    // Encrypt key has probably changed so can't be used
+                }
+                
+            }
             var redirectUrl = Url.Action("OAuthCallback", "Auth", null, Request.Scheme);
 
             var loginPageUrl = authClient.GetAuthUrl(this.settings.State, redirectUrl);
@@ -50,12 +68,7 @@ namespace MonzoSankey.Web.Controllers
 
             var accessToken = await this.authClient.GetAccessTokenAsync(code, redirectUrl);
 
-            var payload = new Dictionary<string, object>
-            {
-                { "access_token", accessToken},
-            };
-
-            var token = JWT.Encode(payload, this.settings.EncryptKey, JwsAlgorithm.HS256);
+            var token = JWT.Encode(accessToken, this.settings.EncryptKey, JwsAlgorithm.HS256);
 
             Response.Cookies.Append("jwt", token);
 
