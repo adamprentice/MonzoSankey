@@ -16,13 +16,9 @@ namespace MonzoSankey.Web
 
         public string ClientSecret { get; set; }
 
-        public string AccessToken { get; set; } // Remove when auth is done
-
         public string BaseUrl { get; set; }
 
         public string ApiSubDomain { get; set; }
-
-        public string AccountId { get; set; } // Remove when Auth is done
 
         public string State {
             get {
@@ -31,7 +27,7 @@ namespace MonzoSankey.Web
                     this._state = StringHelpers.RandomString(50);                    
                 }
 
-                return this.State;
+                return this._state;
             }
         }
 

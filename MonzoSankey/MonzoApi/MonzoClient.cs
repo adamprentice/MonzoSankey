@@ -1,4 +1,5 @@
-﻿using MonzoApi.Services.Helpers;
+﻿using MonzoApi.Core.Models;
+using MonzoApi.Services.Helpers;
 using MonzoApi.Services.Models;
 using MonzoApi.Services.Responses;
 using MonzoSankey.Core.Models;
@@ -27,6 +28,15 @@ namespace MonzoApi.Services
             _httpClient.Dispose();
         }
 
+        public async Task<List<Account>> GetAccounts()
+        {
+            var url = UrlHelper.BuildApiUrl("/accounts", new Dictionary<string, string>());
+
+            var response = await this.GetResponse<ListAccountsResponse>(url);
+
+            return response.Accounts;
+        }
+
         public async Task<List<Transaction>> GetTransactions(string[] accountIds, DateTime? from = null, DateTime? to = null)
         {
             if (accountIds.Length == 0)
@@ -34,23 +44,30 @@ namespace MonzoApi.Services
                 throw new ArgumentNullException(nameof(accountIds));
             }
 
-            var queryValues = new Dictionary<string, string>
+            var transactions = new List<Transaction>();
+
+            foreach (var accountId in accountIds)
             {
-                { "account_id", accountIds.FirstOrDefault()},
-                { "expand[]", "merchant" }
-            };
+                var queryValues = new Dictionary<string, string>
+                {
+                    { "account_id", accountId},
+                    { "expand[]", "merchant" }
+                };
 
-            var pagination = new Pagination
-            {
-                From = from,
-                To = to
-            };
+                var pagination = new Pagination
+                {
+                    From = from,
+                    To = to
+                };
 
-            var url = UrlHelper.BuildApiUrl("transactions", queryValues, pagination);
+                var url = UrlHelper.BuildApiUrl("/transactions", queryValues, pagination);
 
-            var response = await this.GetResponse<ListTransactionsResponse>(url);
+                var response = await this.GetResponse<ListTransactionsResponse>(url);
 
-            return response.Transactions;
+                transactions.AddRange(response.Transactions);
+            }
+
+            return transactions;
         }
 
         private async Task<T> GetResponse<T>(string url)
